@@ -1,4 +1,5 @@
 #include "serial_matrix.hpp"
+#include <stdio.h>
 
 int main()
 {

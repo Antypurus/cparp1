@@ -14,19 +14,17 @@ public:
 
     //class methods
     serial_matrix(const size_t width,const size_t height);
-	serial_matrix(const size_t width, const size_t height, const T[] & matrix_data);
+	serial_matrix(const size_t width, const size_t height, const T* matrix_data);
     ~serial_matrix() override;
 };
 
 template<typename T>
-serial_matrix<T>::serial_matrix(const size_t width,const size_t height):matrix<T>(width,height)
-{
+serial_matrix<T>::serial_matrix(const size_t width,const size_t height):matrix<T>(width,height){
     this->m_matrix = (T*)malloc(width*height);
 }
 
 template<typename T>
-inline serial_matrix<T>::serial_matrix(const size_t width, const size_t height, const T[] & matrix_data)
-{
+serial_matrix<T>::serial_matrix(const size_t width, const size_t height, const T* matrix_data){
 	this->m_matrix = (T*)malloc(width*height);
 	std::copy(&matrix_data[0], &matrix_data[width*height - 1], &this->m_matrix[0]);
 }
