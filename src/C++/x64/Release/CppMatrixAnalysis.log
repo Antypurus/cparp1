@@ -1,4 +1,9 @@
 ﻿  main.cpp
+c:\users\craky\desktop\cparp1\src\c++\main.cpp(10): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
   Generating code
   1 of 57 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

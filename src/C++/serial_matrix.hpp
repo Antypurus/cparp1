@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <iterator>
+//#include <Windows.h>
 
 template<typename T>
 class serial_matrix: public matrix<T>
@@ -55,6 +56,8 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>& m
 
 	//calculate the matrix - this version is bad for cache
 	{
+		//auto start = GetTickCount();
+
 		for (size_t matrix_A_line = 0; matrix_A_line < this->m_height; ++matrix_A_line)
 		{
 			for (size_t matrix_B_col = 0; matrix_B_col < matrix.get_width(); ++matrix_B_col)
@@ -65,6 +68,10 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>& m
 				}
 			}
 		}
+
+		//auto end = GetTickCount();
+
+		//printf("Time Spent:%d", (end - start));
 	}
 
 	return std::make_unique<serial_matrix<T>>(matrix.get_width(),this->m_height,std::move(res));
