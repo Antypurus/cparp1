@@ -12,6 +12,7 @@ public:
     //interaface methods
     std::unique_ptr<matrix<T>> operator*(const matrix<T>& matrix) override;
     T& get_val(const size_t i,const size_t j) override;
+	const T& get(const size_t i, const size_t j)const override;
 
     //class methods
     serial_matrix(const size_t width,const size_t height);
@@ -52,7 +53,19 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>& m
 	T* res = new T[this->m_width * this->m_height]();
 	std::fill(res, res + (this->m_width*this->m_height), T());
 
-	//**//
+	//calculate the matrix
+	{
+		for (size_t line = 0; line < this->get_height(); ++line)
+		{
+			for (size_t col = 0; col < this->get_width(); ++col)
+			{
+				for (size_t second_col = 0; second_col < this->get_width(); ++second_col)
+				{
+					res[line * this->get_width() + col] += this->get_val(line, col) * matrix.get(line, second_col);
+				}
+			}
+		}
+	}
 
 	return std::make_unique<serial_matrix<T>>(this->m_width,this->m_height,std::move(res));
 }
@@ -60,5 +73,11 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>& m
 template<typename T>
 inline T& serial_matrix<T>::get_val(const size_t i,const size_t j)
 {
-    return this->m_matrix[i*this->m_width + j];
+	return this->m_matrix[i * this->m_width + j];
+}
+
+template<typename T>
+inline const T& serial_matrix<T>::get(const size_t i, const size_t j)const
+{
+	return this->m_matrix[i * this->m_width + j];
 }

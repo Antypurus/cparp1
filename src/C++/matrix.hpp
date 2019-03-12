@@ -12,6 +12,7 @@ public:
     matrix(const size_t width,const size_t height):m_width(width),m_height(height){};
     virtual std::unique_ptr<matrix<T>> operator*(const matrix<T>& matrix) = 0;
     virtual T& get_val(const size_t i,const size_t j) = 0;
+	virtual const T& get(const size_t i, const size_t j)const = 0;
 	virtual ~matrix() {};
 
     //always the same methods
