@@ -5,7 +5,7 @@
 //#include <Windows.h>
 
 template<typename T>
-class serial_matrix: public matrix<T>
+class serial_matrix final: public matrix<T>
 {
 private:
     T* m_matrix; //array containing the actual matrix data
@@ -57,9 +57,7 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>* m
 	T* res = (T*)malloc(matrix->get_width() * this->m_height * sizeof(T));
 	std::fill(res, res + (matrix->get_width() * this->m_height), T());
 
-	//calculate the matrix - this version is bad for cache
 	{
-		//auto start = GetTickCount();
 
 		size_t mA_height = this->m_height;
 		size_t mB_height = matrix->get_height();
@@ -75,10 +73,6 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>* m
 				}
 			}
 		}
-
-		//auto end = GetTickCount();
-
-		//printf("Time Spent:%d", (end - start));
 	}
 
 	return std::make_unique<serial_matrix<T>>(matrix->get_width(),this->m_height,std::move(res));
@@ -112,9 +106,9 @@ inline std::unique_ptr<serial_matrix<T>> serial_matrix<T>::operator*(const seria
 
 		for (size_t matrix_A_line = 0; matrix_A_line < mA_height; ++matrix_A_line)
 		{
-			for (size_t matrix_B_line = 0; matrix_B_line < mB_height; ++matrix_B_line)
-			{
 				for (size_t matrix_B_col = 0; matrix_B_col < mB_width; ++matrix_B_col)
+			{
+			for (size_t matrix_B_line = 0; matrix_B_line < mB_height; ++matrix_B_line)
 				{
 					res[matrix_A_line * this->get_height() + matrix_B_col] += this->get(matrix_A_line, matrix_B_line) * matrix.get(matrix_B_line, matrix_B_col);
 				}
