@@ -4,9 +4,10 @@
 
 int main(int argc,char** argv)
 {
-	int matrix_size = atoi(argv[1]);
-	serial_matrix<float>m(matrix_size, matrix_size);
-	serial_matrix<float>n(matrix_size, matrix_size);
+	unsigned int matrix_size = atoi(argv[1]);
+	unsigned char algorithm = atoi(argv[2]);
+	serial_matrix<float>m(matrix_size, matrix_size, algorithm);
+	serial_matrix<float>n(matrix_size, matrix_size, algorithm);
 	auto b = (m * n);
 	int val = b->get_val(1, 1);
 	printf("%d\n", val);
