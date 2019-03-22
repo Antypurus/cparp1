@@ -1,0 +1,11 @@
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\bin\Release\netcoreapp2.1\CSharpPerformanceAnalysis.deps.json
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\bin\Release\netcoreapp2.1\CSharpPerformanceAnalysis.runtimeconfig.json
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\bin\Release\netcoreapp2.1\CSharpPerformanceAnalysis.runtimeconfig.dev.json
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\bin\Release\netcoreapp2.1\CSharpPerformanceAnalysis.dll
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\bin\Release\netcoreapp2.1\CSharpPerformanceAnalysis.pdb
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\obj\Release\netcoreapp2.1\CSharpPerformanceAnalysis.csproj.CoreCompileInputs.cache
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\obj\Release\netcoreapp2.1\CSharpPerformanceAnalysis.AssemblyInfoInputs.cache
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\obj\Release\netcoreapp2.1\CSharpPerformanceAnalysis.AssemblyInfo.cs
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\obj\Release\netcoreapp2.1\CSharpPerformanceAnalysis.dll
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\obj\Release\netcoreapp2.1\CSharpPerformanceAnalysis.pdb
+C:\Users\craky\Desktop\cparp1\src\C#\CSharpPerformanceAnalysis\obj\Release\netcoreapp2.1\CSharpPerformanceAnalysis.csprojAssemblyReference.cache
