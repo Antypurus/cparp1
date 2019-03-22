@@ -10,6 +10,7 @@ class serial_matrix final: public matrix<T>
 private:
     T* m_matrix; //array containing the actual matrix data
 	unsigned char algorithm = 1; // 1 -> Regular Version Bad For Cache, 2 -> Iterative Line Based ALgorithm Good For Cache, 3 -> Block Algorithm Even Better For Cache 
+	size_t BLOCK_SIZE;
 public:
     //interaface methods
     std::unique_ptr<matrix<T>> operator*(const matrix<T>* matrix)const override;
@@ -23,6 +24,7 @@ public:
     serial_matrix(const size_t width,const size_t height,const unsigned char algorithm);
 	serial_matrix(const size_t width, const size_t height, const T matrix_data[], const unsigned char algorithm);
 	serial_matrix(const size_t width, const size_t height, T*&& matrix_data, const unsigned char algorithm);//move constructor for dynamic array
+	void set_block_size(size_t BLOCK_SIZE);
     ~serial_matrix() override;
 };
 
@@ -44,6 +46,12 @@ template<typename T>
 inline serial_matrix<T>::serial_matrix(const size_t width, const size_t height, T*&& matrix_data, const unsigned char algorithm):matrix<T>(width, height), algorithm(algorithm)
 {
 	this->m_matrix = matrix_data;
+}
+
+template<typename T>
+inline void serial_matrix<T>::set_block_size(size_t BLOCK_SIZE)
+{
+	this->BLOCK_SIZE = BLOCK_SIZE;
 }
 
 template<typename T>
@@ -92,7 +100,25 @@ inline std::unique_ptr<matrix<T>> serial_matrix<T>::operator*(const matrix<T>* m
 		}
 		else if (this->algorithm == 3)
 		{
-			//blocl algorithm
+			for (size_t ii = 0; ii < mA_height; ii += BLOCK_SIZE)
+			{
+				for (size_t kk = 0; kk < mB_height; kk += BLOCK_SIZE)
+				{
+					for (size_t jj = 0; jj < mB_width; jj += BLOCK_SIZE)
+					{
+						for (size_t i = ii; i < ii + BLOCK_SIZE && i < mA_height; i++)
+						{
+							for (size_t k = kk; k < kk + BLOCK_SIZE && k < mB_height; k++)
+							{
+								for (size_t j = jj; j < jj + BLOCK_SIZE && j < mB_width; j++)
+								{
+									res[i * this->get_height() + j] += this->get(i, k) * matrix->get(k, j);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -152,7 +178,21 @@ inline std::unique_ptr<serial_matrix<T>> serial_matrix<T>::operator*(const seria
 		}
 		else if (this->algorithm == 3)
 		{
-			//blocl algorithm
+			size_t n = mA_height;
+			size_t en = this->BLOCK_SIZE * (n/this->BLOCK_SIZE); /* Amount that fits evenly into blocks */
+
+			for (size_t kk = 0; kk < en; kk += this->BLOCK_SIZE) {
+				for (size_t jj = 0; jj < en; jj += this->BLOCK_SIZE) {
+					for (size_t i = 0; i < n; i++) {
+						for (size_t k = kk; k < kk + this->BLOCK_SIZE; k++) {
+							for (size_t j = jj; j < jj + this->BLOCK_SIZE; j++) {
+								res[i* this->get_height()+ j] += this->get(i,k)*matrix.get(k,j);
+							}
+						}
+					}
+				}
+			}
+
 		}
 	}
 
